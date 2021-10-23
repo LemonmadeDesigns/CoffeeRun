@@ -11,7 +11,7 @@
       }
       this.$formElement = $(selector);
       if (this.$formElement.length === 0) {
-        throw new Error("Could not find element with selector: " + selector);
+        throw new Error(`Could not find element with selector: ${selector}`);
       }
     }
     addSubmitHandler(fn) {
@@ -25,7 +25,7 @@
         $(this).serializeArray().forEach(function (item) {
           data[item.name] = item.value;
           /* eslint-disable no-console */
-          console.log(item.name + " is " + item.value);
+          console.log(`${item.name.toUpperCase()}: ${item.value}`);
         });
         /* eslint-disable no-console */
         console.log(data);
@@ -43,7 +43,7 @@
         if (fn(emailAddress)) {
           event.target.setCustomValidity("");
         } else {
-          message = emailAddress + " is not an authorized email address!";
+          message = `${emailAddress} is not an authorized email address!`;
           event.target.setCustomValidity(message);
         }
       });
