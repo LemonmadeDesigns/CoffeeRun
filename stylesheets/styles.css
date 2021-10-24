@@ -1,19 +1,40 @@
 fieldset {
-  display: block;
-  margin-inline-start: 2px;
-  margin-inline-end: 2px;
-  padding-block-start: 2em;
-  padding-inline-start: 2em;
-  padding-inline-end: 2em;
-  padding-block-end: 2em;
-  min-inline-size: min-content;
-  border-width: 2px;
-  border-style: groove;
-  border-color: threedface;
-  border-image: initial;
-  margin-bottom: 1em;
+	display: block;
+	margin-inline-start: 2px;
+	margin-inline-end: 2px;
+	padding-block-start: 2em;
+	padding-inline-start: 2em;
+	padding-inline-end: 2em;
+	padding-block-end: 2em;
+	min-inline-size: min-content;
+	border-width: 2px;
+	border-style: groove;
+	border-color: threedface;
+	border-image: initial;
+	margin-bottom: 1em;
 }
 
 #strengthLevel {
-  width: 100%;
+	width: 100%;
+}
+
+.red {
+	color: red;
+	font-weight: 500;
+}
+.green {
+	color: green;
+	font-weight: 500;
+}
+.blue {
+	color: blue;
+	font-weight: 500;
+}
+.purple {
+	color: purple;
+	font-weight: 500;
+}
+.dodgerblue {
+	color: dodgerblue;
+	font-weight: 500;
 }

@@ -14,6 +14,7 @@
         throw new Error(`Could not find element with selector: ${selector}`);
       }
     }
+
     addSubmitHandler(fn) {
       /* eslint-disable no-console */
       console.log("Setting submit handler for form");
@@ -29,11 +30,13 @@
         });
         /* eslint-disable no-console */
         console.log(data);
-        fn(data);
-        this.reset();
-        this.elements[0].focus();
+        fn(data).then(function() {
+          this.reset();
+          this.elements[0].focus();
+        }.bind(this));
       });
     }
+    
     addInputHandler(fn) {
       /* eslint-disable no-console */
       console.log("Setting input handler for form");

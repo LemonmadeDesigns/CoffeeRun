@@ -1,77 +1,74 @@
-(function(window) {
-  "use strict";
+(function (window) {
+	'use strict';
+	var App = window.App || {};
+	var $ = window.jQuery;
 
-  var App = window.App || {};
-  var $ = window.jQuery;
+	class CheckList {
+		constructor(selector) {
+			if (!selector) { throw new Error('No selector provided'); }
 
-  class CheckList {
-    constructor(selector) {
-      if (!selector) {
-        throw new Error("No selector provided");
-      }
+			this.$element = $(selector);
+			if (this.$element.length === 0) {
+					throw new Error('Could not find element with selector: ' + selector);
+			}
+		}
 
-      this.$element = $(selector);
-      if (this.$element.length === 0) {
-        throw new Error("Could not find element with selector: " + selector);
-      }
-    }
-    addClickHandler(fn) {
-      this.$element.on("click", "input", function (event) {
-        var email = event.target.value;
-        this.removeRow(email);
-        fn(email);
-      }.bind(this));
-    }
-    addRow(coffeeOrder) {
-      this.removeRow(coffeeOrder.emailAddress);
+		addClickHandler(fn) { 
+			this.$element.on('click', 'input', function(event) {
+				var email = event.target.value;
+				fn(email).then(function() { 
+					this.removeRow(email);
+				}.bind(this));
+			}.bind(this));
+		}
+		
+		addRow(coffeeOrder) {
+			this.removeRow(coffeeOrder.emailAddress);
+			var rowElement = new Row(coffeeOrder);
+			this.$element.append(rowElement.$element);
+		}
 
-      var rowElement = new Row(coffeeOrder);
+		removeRow(email) {
+			this.$element
+				.find('[value="' + email + '"]')
+				.closest('[data-coffee-order="checkbox"]')
+				.remove();
+		}
+	}
 
-      this.$element.append(rowElement.$element);
-    }
-    removeRow(email) {
-      this.$element
-        .find("[value='" + email + "']")
-        .closest("[data-coffee-order='checkbox']")
-        .remove();
-    }
-  }
+	class Row {
+		constructor(coffeeOrder) {
+			var $div = $('<div></div>', {
+					'data-coffee-order': 'checkbox', 'class': 'checkbox'
+			});
 
-  class Row {
-    constructor(coffeeOrder) {
-      var $div = $("<div></div>", {
-        "data-coffee-order": "checkbox",
-        "class": "checkbox"
-      });
+			var $label = $('<label></label>');
 
-      var $label = $("<label></label>");
+			var $checkbox = $('<input></input>', {
+					type: 'checkbox',
+					value: coffeeOrder.emailAddress
+			});
 
-      var $checkbox = $("<input></input>", {
-        type: "checkbox",
-        value: coffeeOrder.emailAddress
-      });
+			var description;
+			description = ` <span class="red">ORDER #: ${coffeeOrder.coffee}</span>, `;
+			description += `<span class="blue">SIZE: ${coffeeOrder.size}</span>, `;
 
+			if (coffeeOrder.flavor) {
+					description += `<span class="green">FLAVOR: ${coffeeOrder.flavor}</span>, `;
+			}
+			
+			description += `<span class="dodgerblue">STRENGTH: [ ${coffeeOrder.strength}x ]</span>, `;
+			description += `<span class="purple">EMAIL: ( ${coffeeOrder.emailAddress} )</span>, `;
+			
+			$label.append($checkbox);
+			$label.append(description);
+			$div.append($label);
 
-      var description; 
-      description = ` <span class="purple">Order #: ${coffeeOrder.coffee},</span> `;
-      description += `<span class="red">Coffee Size: ${coffeeOrder.size},</span> `;
+			this.$element = $div;
+		}
+	}
 
-      if (coffeeOrder.flavor) {
-        description += `<span class="green">Flavor: ${coffeeOrder.flavor},</span> `;
-      }
-
-      description += `<span class="blue">Caffine % [ ${coffeeOrder.strength}x ],</span> `;
-      description += `<span>Email: <i> ${coffeeOrder.emailAddress} </i>,</span> `;
-      description += `<p><a href='payment.html'>Payment Method</a></p>`;
-
-      $label.append($checkbox);
-      $label.append(description);
-      $div.append($label);
-
-      this.$element = $div;
-    }
-  }
-
-  App.CheckList = CheckList;
-  window.App = App;
+	App.CheckList = CheckList;
+	window.App = App;
+	
 })(window);
