@@ -1,18 +1,18 @@
-(function(window) {
+(function (window) {
 	("use strict");
 
 	var FORM_SELECTOR = "[data-coffee-order='form']";
 	var CHECKLIST_SELECTOR = "[data-coffee-order='checklist']";
-  var FIREBASE_SERVER_URL = "http://coffee-run-f4100.firebaseapp.com";
+	var FIREBASE_SERVER_URL = "http://coffee-run-f4100.firebaseapp.com";
 
 	var App = window.App;
 	var Truck = App.Truck;
-  var firebasedatastore = App.firebasedatastore;
+	var firebasedatastore = App.firebasedatastore;
 	var FormHandler = App.FormHandler;
 	var Validation = App.Validation;
 	var CheckList = App.CheckList;
 
-  var datastore = new firebasedatastore(FIREBASE_SERVER_URL);
+	var datastore = new firebasedatastore(FIREBASE_SERVER_URL);
 	var myTruck = new Truck("ncc-1705", datastore);
 
 	window.myTruck = myTruck;

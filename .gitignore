@@ -1,1 +1,3 @@
 node_modules/
+.eslintric.js/
+package-lock.json

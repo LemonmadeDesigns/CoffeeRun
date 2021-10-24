@@ -6,7 +6,7 @@
 
 	class DataStore {
 		constructor() {
-			console.log('Running the Data Store function');
+			console.log("Running the Data Store function");
 			this.data = {};
 		}
 		promiseResolvedWith(value) {
